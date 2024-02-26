@@ -11,6 +11,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
+const team = [];
+
 /* --------------------- Function to initialise program --------------------- */
 function init() {
 
@@ -39,13 +41,9 @@ function init() {
         ])
         .then((data) => {
             const manager = new Manager(data.teamManagerName, data.teamManagerId, data.teamManagerEmail, data.teamManagerOfficeNumber);
-            displayEmployee("Manager", manager);
+            team.push(manager);
             displayMenu();
         })
-}
-
-function displayEmployee(type, data) {
-    console.log(data);
 }
 
 function displayMenu() {
@@ -107,7 +105,7 @@ function addEngineer() {
         ])
         .then((data) => {
             const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.GitHub);
-            displayEmployee("Engineer", data);
+            team.push(engineer);
             displayMenu();
         })
 }
@@ -138,13 +136,19 @@ function addIntern() {
         ])
         .then((data) => {
             const intern = new Intern(data.internName, data.internId, data.internEmail, data.school);
-            displayEmployee("Intern", data);
+            team.push(intern);
             displayMenu();
         })
 }
 
 function finish() {
-    console.log(`Will finish`);
+    const html = render(team);
+    console.log(team);
+    fs.writeFile(outputPath, html, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    })
 }
 
 /* ------------------- Function call to initialise program ------------------ */
