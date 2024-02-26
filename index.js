@@ -11,11 +11,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
-const team = [];
+const team = []; // Will contain the employee objects that will be rendered in the HTML
 
 /* --------------------- Function to initialise program --------------------- */
 function init() {
-
     inquirer
         .prompt([
             {
@@ -46,8 +45,8 @@ function init() {
         })
 }
 
+/* ---------------------- Function to display the menu ---------------------- */
 function displayMenu() {
-
     console.log(`\n`);
     inquirer
         .prompt([
@@ -59,7 +58,6 @@ function displayMenu() {
             }
         ])
         .then((data) => {
-            console.log(`You chose ${data.menu}`);
             switch (data.menu) {
                 case "Add an engineer":
                     addEngineer();
@@ -79,6 +77,7 @@ function displayMenu() {
         })
 }
 
+/* ----------------------- Function to add an Engineer ---------------------- */
 function addEngineer() {
     inquirer
         .prompt([
@@ -110,6 +109,7 @@ function addEngineer() {
         })
 }
 
+/* ------------------------ Function to add an Intern ----------------------- */
 function addIntern() {
     inquirer
         .prompt([
@@ -141,9 +141,9 @@ function addIntern() {
         })
 }
 
+/* -------- Function to finish up, render the HTML and write to file -------- */
 function finish() {
     const html = render(team);
-    console.log(team);
     fs.writeFile(outputPath, html, function (err) {
         if (err) {
             console.log(err);
